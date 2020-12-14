@@ -4,26 +4,12 @@ const db = require("./db");
 
 app.use(express.static("public"));
 
-// const cities = [
-//             {
-//                 name: "berlin",
-//                 country: "germany"
-//             },
-//             {
-//                 name: "london", 
-//                 country: "england"
-//             },
-//             {
-//                 name: "paris",
-//                 country: "france"
-//             }
-//         ];
 
 app.get("/imageboard", (req,res) => {
-    // then i wan to sen d the cities back as a JSON response
+    // then i wan to send the cities back as a JSON response
     // we dont use RENDER for this project
     db.getImgages()
-        .then(({rows})=> {
+        .then(({rows}) => {
             console.log("rows", rows);
                 res.json(rows);
         })

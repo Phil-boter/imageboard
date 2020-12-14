@@ -1,7 +1,7 @@
 console.log("sanity");
 
 new Vue({
-    el: "#imagecontainer", // for div id imagecontainer
+    el: ".imagecontainer", // for div id imagecontainer
     data: {
         images: []
     },
@@ -16,7 +16,7 @@ new Vue({
             console.log("response.data", response.data);
             console.log("this inside then", this);
             // this.cities = response.data;
-            self.images = response.data;
+            self.images = response.data; // import images here from data to self
             console.log("self images", self.images); // now here it is a array of objects from the global this
         }).catch(function (error){
             console.log("error", error);

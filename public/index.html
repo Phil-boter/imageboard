@@ -2,15 +2,18 @@
 <html>
 <head>
     <title></title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>Imageboard</h1>
-    <div id="imagecontainer">
-        <div v-for="image in images">
-        <!-- <img v-bind:class="myClassName">the best cohort is: {{ id }}> -->
-
-            <img :src="image.url">
+    <header class="header">
+        <p>Imageboard</p>
+    </header>
+    
+    <div class="imagecontainer">
+        <div v-for="image in images" class="image-box">
+            <img class="img" :src="image.url">
             <p>{{ image.title }}</p>
         </div>
     </div>
