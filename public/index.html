@@ -2,9 +2,20 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <h1>Imageboard</h1>
+    <div id="imagecontainer">
+        <div v-for="image in images">
+        <!-- <img v-bind:class="myClassName">the best cohort is: {{ id }}> -->
+
+            <img :src="image.url">
+            <p>{{ image.title }}</p>
+        </div>
+    </div>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
