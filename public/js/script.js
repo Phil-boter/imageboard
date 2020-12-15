@@ -1,9 +1,14 @@
 console.log("sanity");
 
 new Vue({
-    el: ".imagecontainer", // for div id imagecontainer
+    el: "#main", // for div id imagecontainer
     data: {
-        images: []
+
+        title: "",
+        description: "",
+        username: "",
+        image: null,
+        images: [], 
     },
     //mountes is a lifecycle method that we can access
     mounted: function(){
@@ -21,5 +26,28 @@ new Vue({
         }).catch(function (error){
             console.log("error", error);
         });
-    }
-})
+    },
+        methods: {
+        handleFileChange: function (e) {
+            // Set the data's "image" property to the newly uploaded file
+            this.image = e.target.files[0];
+        },
+        upload: function (e) {
+            // Prevent the default behavior (i.e navigating to a new page on submitting the form)
+            e.preventDefault();
+            console.log("click");
+
+            var formData = new FormData();
+
+            formData.append("title", this.title);
+            // formData.append("description", this.description);
+            // formData.append("username", this.username);
+            formData.append("image", this.image);
+            // console.log("form", formData);
+            // 2. Post the form data to the "/uploads" route with axios 
+            axios.post("/upload", formData).then(console.log());
+
+
+        },
+    },
+});

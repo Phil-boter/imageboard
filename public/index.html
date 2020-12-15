@@ -10,11 +10,27 @@
     <header class="header">
         <p>Imageboard</p>
     </header>
+
+    <div id="main">
+        <form method="POST" action="/upload" enctype="multipart/form-data">
+            <input name="title" placeholder="Title" v-model="title" />
+            <input name="description" placeholder="Description" v-model="description" />
+            <input name="username" placeholder="Username" v-model="username" />
+
+            <input name="image" type="file" accept="image/*" @change="handleFileChange" />
+            
+            <button @click="upload">Upload</button>
+            <!-- Also available: -->
+            <!-- <button @click.prevent.default="upload">Upload</button> -->
+        </form>
     
-    <div class="imagecontainer">
-        <div v-for="image in images" class="image-box">
-            <img class="img" :src="image.url">
-            <p>{{ image.title }}</p>
+    
+        <div class="imagecontainer">
+            <div v-for="image in images" class="image-box">
+                <img class="img" :src="image.url">
+                <h4>{{ image.title }}</h4>
+                <p>{{ image.description }}</p>
+            </div>
         </div>
     </div>
     <script src="/js/vue.js"></script>
