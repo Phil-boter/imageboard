@@ -12,20 +12,23 @@
     </header>
 
     <div id="main">
-        <form method="POST" action="/upload" enctype="multipart/form-data">
+        <h1>image upload</h1>
+        <div class="input-container">
+        
+        <form class="form" method="POST" action="/upload" enctype="multipart/form-data" autocomplete="off">
             <input name="title" placeholder="Title" v-model="title" />
             <input name="description" placeholder="Description" v-model="description" />
             <input name="username" placeholder="Username" v-model="username" />
-
-            <input name="image" type="file" accept="image/*" @change="handleFileChange" />
-            
-            <button @click="upload">Upload</button>
-            <!-- Also available: -->
-            <!-- <button @click.prevent.default="upload">Upload</button> -->
+            <div class="label-container">
+                <input id="file" class="inputfile" name="image" type="file" accept="image/*" @change="handleFileChange" />
+                <label for="file">choose a file</label>
+                <button class="upload-button" @click="upload">Upload</button>
+             </div>
         </form>
-    
-    
+    </div>
+        
         <div class="imagecontainer">
+            <h1>latest uploads</h1>
             <div v-for="image in images" class="image-box">
                 <img class="img" :src="image.url">
                 <h4>{{ image.title }}</h4>
