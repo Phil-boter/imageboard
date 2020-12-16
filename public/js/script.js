@@ -8,7 +8,6 @@ Vue.component("modal-component", {
     props: ["imageId"],
     data: function() {
         return {
-            // name: "hallo",
             image: {
                     id: '',
                     url: '',
@@ -21,14 +20,16 @@ Vue.component("modal-component", {
     },
     mounted: function() {
         var self = this;
-        console.log("This/ props", self);
-        axios.get(`/singleImage/` + this.imageId)    // {params: {id: this.imageId}}
+
+        axios.get(`/singleImage/` + this.imageId)
              .then(function(res){
                 console.log("axios getImage");
-                // console.log("res.data",res.data)
-                self.image = res.data[0].id;
-                // console.log("self.image :", self.image);
-                
+                console.log("res.data",res.data)
+                self.image.id = res.data[0].id;
+                self.image.url = res.data[0].url;
+                self.image.title = res.data[0].title;
+                self.image.description = res.data[0].description;
+                self.image.username = res.data[0].username;               
             })
             .catch((err) => {
                 console.log("error in get singleImage", err);
@@ -100,10 +101,9 @@ new Vue({
                 });
                                  
             },
-            showComponent: function(e, id) {
+            showComponent: function(id) {
                 console.log("click show up modal");
                 console.log("this.imageId", this.imageId); 
-                console.log("e.target", e.target);
                 this.imageId = id;
 
                 console.log("this.imageId", this.imageId); 

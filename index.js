@@ -84,14 +84,14 @@ app.post("/upload",upload.single("image"),s3.upload,  (req, res) => {
     }
 });
 
-app.get("/singleImage", (req, res) => {
+app.get("/singleImage/:id", (req, res) => {
     console.log("get singleImage");
-    console.log("get singleImage", req.params);
-    console.log("get singleImage", req.query);
-    const id = res.query.id;
+    console.log("get singleImage", req.params.id);
+
+    const id = req.params.id;
     db.getSingleImage(id)
         .then(({rows}) => {
-            // console.log("rows:",rows);
+            console.log("rows:",rows);
             res.json(rows);
         })
         .catch((err) => {

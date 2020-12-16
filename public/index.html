@@ -31,7 +31,7 @@
         <!-- render images -->
         <div class="imagecontainer">
             <h1>latest uploads</h1>
-            <div v-for="image in images" class="image-box" @click="showComponent">
+            <div v-for="image in images" class="image-box" @click="showComponent(image.id)">
                 <img class="img" :src="image.url">
                 <h4>{{ image.title }}</h4>
                 <p>{{ image.description }}</p>
@@ -50,9 +50,15 @@
     <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
     <script id="modal" type="text/x-template">
         <div class="modal-container">
-            <p>Modal goes here {{name}}</p>
-            <img :src="image.url" alt="">
-            <h2 @click="closeModal">X</h2>
+            <div class="modal-content">
+                <h2 @click="closeModal" class="close-button">X</h2>
+                <img :src="image.url" alt="">
+                <div>
+                    <p>{{image.title}}}</p>
+                    <p>{{image.description}}}</p>
+                    <p>{{image.username}}}</p>
+                </div>
+            </div>
         </div>
     </script>
 
