@@ -98,6 +98,18 @@ app.get("/singleImage/:id", (req, res) => {
             console.log("error in GET/getSingleImage ", err);
         });
 });
+app.get("/getMoreImages/:id", (req,res) => {
+    console.log("GET getMoreImages");
+    const lastId = req.params.id;
+    db.getMoreImages(lastId)
+        .then(({rows})=> {
+            console.log("rows", rows);
+            res.json(rows);
+        })
+        .catch((err)=> {
+            console.log("error in getMoreImages", err)
+        })
+});
 
 
 

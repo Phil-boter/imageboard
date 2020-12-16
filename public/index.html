@@ -4,11 +4,12 @@
     <title></title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <header class="header">
-        <p>Imageboard</p>
+        <p>Beautyful Bicycles</p>
     </header>
 
     <div id="main">
@@ -22,8 +23,8 @@
             <input name="username" placeholder="Username" v-model="username" />
             <div class="label-container">
                 <input id="file" class="inputfile" name="image" type="file" accept="image/*" @change="handleFileChange" />
-                <label for="file">choose a file</label>
-                <button class="upload-button" @click="upload">Upload</button>
+                <label for="file">choose file</label>
+                <button class="upload button" @click="upload">Upload</button>
              </div>
         </form>
     </div>
@@ -36,6 +37,10 @@
                 <h4>{{ image.title }}</h4>
                 <p>{{ image.description }}</p>
             </div>
+            
+        </div>
+        <div class="more-container">
+            <button v-if="showMore" @click="getMoreImages" id="more" class="more button">more</button>
         </div>
     
          <!-- component for modal show up -->
@@ -52,11 +57,12 @@
         <div class="modal-container">
             <div class="modal-content">
                 <h2 @click="closeModal" class="close-button">X</h2>
-                <img :src="image.url" alt="">
-                <div>
-                    <p>{{image.title}}}</p>
-                    <p>{{image.description}}}</p>
-                    <p>{{image.username}}}</p>
+                
+                <div class="modal-description">
+                    <img :src="image.url" alt="">
+                    <p>{{image.title}}</p>
+                    <p>{{image.description}}</p>
+                    <p>{{image.username}}</p>
                 </div>
             </div>
         </div>

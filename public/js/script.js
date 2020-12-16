@@ -33,7 +33,7 @@ Vue.component("modal-component", {
             })
             .catch((err) => {
                 console.log("error in get singleImage", err);
-                // this.$emit("close");
+                this.$emit("close");
             })
     },
     methods: {
@@ -54,6 +54,7 @@ new Vue({
         image: null,
         images: [],
         imageId: null, // show up the modal set to null --> modal will disappear
+        showMore: true,
     },
     //mountes is a lifecycle method that we can access
     mounted: function(){
@@ -113,6 +114,22 @@ new Vue({
                 console.log('closeMe in the instance / parent is running! This was emitted from the component');
                 this.imageId = null;
             },
+            getMoreImages: function() {
+                const lastId = this.images[this.images.length -1].id;
+                console.log("lastId", lastId);
+                var self = this;
+                axios.get("/getMoreImages/" + lastId)
+                    .then(function(res) {
+                        self.images.push.apply(self.images, res.data);
+
+                        if(res.data == 0) {
+                            self.showMore = false;
+                        }
+                    })
+                    .catch((err) => {
+                        console.log("error getMoreImages", err);
+                    })
+            }
         },
 });
 

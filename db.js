@@ -5,7 +5,7 @@ const db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@loca
 
 module.exports.getImgages = () => {
     return db.query(
-        "SELECT * FROM images ORDER BY id DESC"
+        "SELECT * FROM images ORDER BY id DESC LIMIT 5"
     );
 };
 
@@ -29,3 +29,20 @@ module.exports.getSingleImage = (id)=> {
             [id]
         );
 };
+
+module.exports.getMoreImages = (lastId) => {
+        return db
+        .query(
+            `
+            SELECT *, (
+                SELECT id FROM images
+                ORDER BY id
+                LIMIT 1) AS last_id
+            FROM images
+            WHERE id < $1
+            ORDER BY id DESC
+            LIMIT 5`,
+            [lastId]
+        )
+
+}
