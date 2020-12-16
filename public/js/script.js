@@ -3,16 +3,37 @@
 (function () {
 console.log("sanity");
 
-Vue.component("modal", {
+Vue.component("modal-component", {
     template: "#modal",
     props: ["imageId"],
     data: function() {
         return {
-            name: "hallo"
+            // name: "hallo",
+            image: {
+                    id: '',
+                    url: '',
+                    username: '',
+                    title: '',
+                    description: '',
+                    created_at: '',
+            },
         };
     },
     mounted: function() {
-        console.log("props", this.imgageId);
+        var self = this;
+        console.log("This/ props", self);
+        axios.get(`/singleImage/` + this.imageId)    // {params: {id: this.imageId}}
+             .then(function(res){
+                console.log("axios getImage");
+                // console.log("res.data",res.data)
+                self.image = res.data[0].id;
+                // console.log("self.image :", self.image);
+                
+            })
+            .catch((err) => {
+                console.log("error in get singleImage", err);
+                // this.$emit("close");
+            })
     },
     methods: {
         closeModal: function() {
@@ -31,7 +52,7 @@ new Vue({
         username: "",
         image: null,
         images: [],
-        imageId: "", // show up the modal set to null --> modal will disappear
+        imageId: null, // show up the modal set to null --> modal will disappear
     },
     //mountes is a lifecycle method that we can access
     mounted: function(){
@@ -70,7 +91,7 @@ new Vue({
                 axios.post("/upload", formData)
                 .then(res => {
                     if(res.data.success){
-                        console.log("response", res.data);
+                        // console.log("response", res.data);
                         this.images.unshift(res.data);
                     }
 
@@ -79,14 +100,18 @@ new Vue({
                 });
                                  
             },
-            showComponent: function(e) {
+            showComponent: function(e, id) {
                 console.log("click show up modal");
-                console.log("e.target.id",e.target);
-                this.imageId = e.target;               
+                console.log("this.imageId", this.imageId); 
+                console.log("e.target", e.target);
+                this.imageId = id;
+
+                console.log("this.imageId", this.imageId); 
+       
             },
-            closeComponent: function(e) {
+            closeComponent: function() {
                 console.log('closeMe in the instance / parent is running! This was emitted from the component');
-                this.imageId = 0;
+                this.imageId = null;
             },
         },
 });

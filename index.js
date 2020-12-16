@@ -34,6 +34,7 @@ const upload = multer({
 
 
 app.get("/imageboard", (req,res) => {
+    console.log("get imageBoard");
     // then i want to send the cities back as a JSON response
     db.getImgages()
         .then(({rows}) => {
@@ -81,6 +82,21 @@ app.post("/upload",upload.single("image"),s3.upload,  (req, res) => {
             success: false
         });
     }
+});
+
+app.get("/singleImage", (req, res) => {
+    console.log("get singleImage");
+    console.log("get singleImage", req.params);
+    console.log("get singleImage", req.query);
+    const id = res.query.id;
+    db.getSingleImage(id)
+        .then(({rows}) => {
+            // console.log("rows:",rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error in GET/getSingleImage ", err);
+        });
 });
 
 

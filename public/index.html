@@ -39,19 +39,19 @@
         </div>
     
          <!-- component for modal show up -->
-        <modal
+        <modal-component
             v-if="imageId"
-            :image-id="imageId"
+            :id="imageId"
             @close="closeComponent">
         
-        </modal>
+        </modal-component>
     </div>
 
     <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
     <script id="modal" type="text/x-template">
         <div class="modal-container">
             <p>Modal goes here {{name}}</p>
-            <img src="" alt="">
+            <img :src="image.url" alt="">
             <h2 @click="closeModal">X</h2>
         </div>
     </script>
