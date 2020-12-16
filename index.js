@@ -5,7 +5,6 @@ const path = require("path");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const s3 = require("./s3");
-console.log
 
 
 // Multer configurations ------------------------------------------------------
@@ -36,7 +35,6 @@ const upload = multer({
 
 app.get("/imageboard", (req,res) => {
     // then i want to send the cities back as a JSON response
-    // we dont use RENDER for this project
     db.getImgages()
         .then(({rows}) => {
             console.log("rows", rows);
@@ -75,6 +73,9 @@ app.post("/upload",upload.single("image"),s3.upload,  (req, res) => {
                 success: true,
             })
         )
+        .catch((err) => {
+            console.log("Error in uploadImage", err);
+        })
     } else {
         res.json({
             success: false

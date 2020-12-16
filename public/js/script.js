@@ -1,14 +1,37 @@
+// const { EMRcontainers } = require("aws-sdk");
+
+(function () {
 console.log("sanity");
+
+Vue.component("modal", {
+    template: "#modal",
+    props: ["imageId"],
+    data: function() {
+        return {
+            name: "hallo"
+        };
+    },
+    mounted: function() {
+        console.log("props", this.imgageId);
+    },
+    methods: {
+        closeModal: function() {
+            this.$emit("close");
+        }
+    }
+});
+
+
 
 new Vue({
     el: "#main", // for div id imagecontainer
     data: {
-
         title: "",
         description: "",
         username: "",
         image: null,
-        images: [], 
+        images: [],
+        imageId: "", // show up the modal set to null --> modal will disappear
     },
     //mountes is a lifecycle method that we can access
     mounted: function(){
@@ -46,13 +69,28 @@ new Vue({
                 // 2. Post the form data to the "/upload" route with axios 
                 axios.post("/upload", formData)
                 .then(res => {
-                    console.log("response", res);
-                    this.images.unshift(res.data);
+                    if(res.data.success){
+                        console.log("response", res.data);
+                        this.images.unshift(res.data);
+                    }
+
                 })
                 .catch(err => {console.log("error axois upload", err);
                 });
-                   
-               
+                                 
+            },
+            showComponent: function(e) {
+                console.log("click show up modal");
+                console.log("e.target.id",e.target);
+                this.imageId = e.target;               
+            },
+            closeComponent: function(e) {
+                console.log('closeMe in the instance / parent is running! This was emitted from the component');
+                this.imageId = 0;
             },
         },
 });
+
+
+
+})();

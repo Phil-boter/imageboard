@@ -12,6 +12,7 @@
     </header>
 
     <div id="main">
+        <!-- image upload -->
         <h1>image upload</h1>
         <div class="input-container">
         
@@ -27,15 +28,36 @@
         </form>
     </div>
         
+        <!-- render images -->
         <div class="imagecontainer">
             <h1>latest uploads</h1>
-            <div v-for="image in images" class="image-box">
+            <div v-for="image in images" class="image-box" @click="showComponent">
                 <img class="img" :src="image.url">
                 <h4>{{ image.title }}</h4>
                 <p>{{ image.description }}</p>
             </div>
         </div>
+    
+         <!-- component for modal show up -->
+        <modal
+            v-if="imageId"
+            :image-id="imageId"
+            @close="closeComponent">
+        
+        </modal>
     </div>
+
+    <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
+    <script id="modal" type="text/x-template">
+        <div class="modal-container">
+            <p>Modal goes here {{name}}</p>
+            <img src="" alt="">
+            <h2 @click="closeModal">X</h2>
+        </div>
+    </script>
+
+
+
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>
