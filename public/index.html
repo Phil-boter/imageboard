@@ -47,12 +47,13 @@
         <modal-component
             v-if="imageId"
             :image-id="imageId"
-            @close="closeComponent">
-        
+            @close="closeComponent"  
+            >            
         </modal-component>
+
     </div>
 
-    <!-- THIS IS WHERE THE CODE FOR THE COMPONENT GOES -->
+    <!-- Image modal -->
     <script id="modal" type="text/x-template">
         <div class="modal-container">
             <div class="modal-content">
@@ -62,10 +63,29 @@
                     <img :src="image.url" alt="">
                     <p>{{image.title}}</p>
                     <p>{{image.description}}</p>
-                    <p>{{image.username}}</p>
+                    <p>uploaded by {{image.username}} on {{image.created_at}} </p>
+                </div>
+                <div>
+                    <comment-component :image-id="imageId"></comment-component>
                 </div>
             </div>
         </div>
+    </script>
+    
+    <!-- Comment modal -->
+    <script id="comment" type="text/x-template">
+            <div class="comment-container">
+                <div class="comment-input">
+                    <form method="POST">
+                        <p>comment</p><input name="comment" type="text" placeholder="add comment" v-modal="comment">
+                        <p>username</p><input name="username" type="text" placeholder="your name" v-modal="username">
+                        <button class="button" @click="uploadComment">submit</button>
+                     </form>
+                </div>
+                <div class="comment-display"  v-for="comment in comments">
+                   {{comment.commet}}
+                </div>
+            </div>
     </script>
 
 

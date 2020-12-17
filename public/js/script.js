@@ -1,7 +1,59 @@
-// const { EMRcontainers } = require("aws-sdk");
 
 (function () {
 console.log("sanity");
+
+Vue.component("comment-component", {
+    template: "#comment",
+    props: ["imageId"],
+    data: function () {
+        return {
+            comment: "",
+            username: "",
+            comments: [],
+        };
+    },
+    mounted: function () {
+        console.log("my vue componnet haas mounted");
+        console.log("this", this);
+        var self = this;
+
+        axios.get("/comments/" + this.imageId)
+            .then(function(res){
+                console.log("axios get comments");
+                console.log("res data get comments", res.data);
+                self.comments = res.data;
+
+            })
+            .catch((err)=> {
+                console.log("error get comments",err);
+            })
+    },
+    methods: {
+    
+        uploadComment: function () {
+            var self = this;
+                e.preventDefault();
+                console.log("click");
+                var commentToSend = {
+                    comment: this.comment,
+                    username: this.username,
+                    image_id: this.id
+                };
+
+                axios.post("/sendComment", commentToSend)
+                .then(function(res) {               
+                        console.log("response", res.data);
+                        self.comments.unshift(res.data.comment);
+                        self.comment = "";
+                        self.username = "";
+                })
+                .catch(err => {console.log("error axois sendComment", err);
+                });
+        }
+    }
+});
+
+
 
 Vue.component("modal-component", {
     template: "#modal",
@@ -29,7 +81,8 @@ Vue.component("modal-component", {
                 self.image.url = res.data[0].url;
                 self.image.title = res.data[0].title;
                 self.image.description = res.data[0].description;
-                self.image.username = res.data[0].username;               
+                self.image.username = res.data[0].username; 
+                self.image.created_at = res.data[0].created_at;              
             })
             .catch((err) => {
                 console.log("error in get singleImage", err);
@@ -116,6 +169,7 @@ new Vue({
             },
             getMoreImages: function() {
                 const lastId = this.images[this.images.length -1].id;
+                console.log("this.images.length",this.images.length);
                 console.log("lastId", lastId);
                 var self = this;
                 axios.get("/getMoreImages/" + lastId)

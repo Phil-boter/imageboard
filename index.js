@@ -11,6 +11,8 @@ const s3 = require("./s3");
 // Specify file names and destinations
 app.use(express.static("./public"));
 // app.use(express.static("./uploads"));
+app.use(express.json());
+
 
 const diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -38,7 +40,7 @@ app.get("/imageboard", (req,res) => {
     // then i want to send the cities back as a JSON response
     db.getImgages()
         .then(({rows}) => {
-            console.log("rows", rows);
+            // console.log("rows", rows);
                 res.json(rows);
         })
         .catch((err)=> {
@@ -84,18 +86,20 @@ app.post("/upload",upload.single("image"),s3.upload,  (req, res) => {
     }
 });
 
+
+
 app.get("/singleImage/:id", (req, res) => {
     console.log("get singleImage");
-    console.log("get singleImage", req.params.id);
+    // console.log("get singleImage", req.params.id);
 
     const id = req.params.id;
     db.getSingleImage(id)
         .then(({rows}) => {
-            console.log("rows:",rows);
+            // console.log("rows:",rows);
             res.json(rows);
         })
         .catch((err) => {
-            console.log("error in GET/getSingleImage ", err);
+            console.log("error in GET/getSingsImage ", err);
         });
 });
 app.get("/getMoreImages/:id", (req,res) => {
@@ -103,13 +107,33 @@ app.get("/getMoreImages/:id", (req,res) => {
     const lastId = req.params.id;
     db.getMoreImages(lastId)
         .then(({rows})=> {
-            console.log("rows", rows);
+            // console.log("rows", rows);
             res.json(rows);
         })
         .catch((err)=> {
-            console.log("error in getMoreImages", err)
+            console.log("error in getMoreImages", err);
         })
 });
+
+app.get("/comments/:imageId", (req,res)=> {
+    console.log("GET comments");
+    console.log("req comments",req.params);
+    
+    db.getComments(req.params.imageId)
+        .then(({rows}) => {
+            console.log("rows get", rows);
+            res.json({rows})
+    })
+    .catch((err)=> {
+            console.log("error in getComments", err);
+        });
+});
+
+app.post("/sendComment", (req,res)=> {
+    console.log("POST sendComment");
+    console.log("req sendcom",req.body);
+
+})
 
 
 
