@@ -6,10 +6,11 @@ Vue.component("comment-component", {
     template: "#comment",
     props: ["imageId"],
     data: function () {
-        return {
+        return { 
+            comments: [],
             comment: "",
             username: "",
-            comments: [],
+           
         };
     },
     mounted: function () {
@@ -30,22 +31,20 @@ Vue.component("comment-component", {
     },
     methods: {
     
-        uploadComment: function () {
+        uploadComment: function (e) {
             var self = this;
                 e.preventDefault();
                 console.log("click");
                 var commentToSend = {
                     comment: this.comment,
                     username: this.username,
-                    image_id: this.id
+                    imageId: this.id
                 };
 
                 axios.post("/sendComment", commentToSend)
                 .then(function(res) {               
                         console.log("response", res.data);
-                        self.comments.unshift(res.data.comment);
-                        self.comment = "";
-                        self.username = "";
+                        self.comments.unshift(res.data);
                 })
                 .catch(err => {console.log("error axois sendComment", err);
                 });

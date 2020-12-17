@@ -46,16 +46,16 @@ module.exports.getMoreImages = (lastId) => {
         );
 };
 
-module.exports.getComments = (id) => {
+module.exports.getComments = (imageId) => {
     return db
         .query(
             `
-            SELECT *
+            SELECT comment, username, created_at
             FROM comments
             WHERE image_id =$1
             ORDER BY DESC
             `
-            [id]
+            [imageId]
         );
 }
 
