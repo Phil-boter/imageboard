@@ -5,14 +5,13 @@ const path = require("path");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const s3 = require("./s3");
+const { s3Url } = require("./config.json");
 
 
 // Multer configurations ------------------------------------------------------
 // Specify file names and destinations
-app.use(express.static("./public"));
-// app.use(express.static("./uploads"));
-app.use(express.json());
 
+// app.use(express.static("./uploads"));
 
 const diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
@@ -33,6 +32,8 @@ const upload = multer({
     },
 });
 
+
+app.use(express.json({extended: false}));
 
 
 app.get("/imageboard", (req,res) => {
@@ -117,11 +118,11 @@ app.get("/getMoreImages/:id", (req,res) => {
 
 app.get("/comments/:imageId", (req,res)=> {
     console.log("GET comments");
-    console.log("req comments",req.params);
+    console.log("req.params GET/comments",req.params);
     db.getComments(req.params.imageId)
         .then(({rows}) => {
             console.log("rows get", rows);
-            res.json({rows})
+            res.json(rows)
     })
     .catch((err)=> {
             console.log("error in getComments", err);
@@ -130,10 +131,12 @@ app.get("/comments/:imageId", (req,res)=> {
 
 app.post("/sendComment", (req,res)=> {
     console.log("POST sendComment");
-    console.log("req sendcom",req.body);
-    const { imageId, comment, username } = req.body;
-
-    db.saveComment(imageId, comment, username)
+    console.log("req.body sendcomment",req.body);
+    const {  comment, username, imageId } = req.body;
+    console.log("user", username);
+      console.log("comment", comment);
+        console.log("imageId", imageId);
+    db.saveComment(comment, username, imageId)
         .then(({ rows }) => {
             res.json(rows[0]);
         })
@@ -142,6 +145,6 @@ app.post("/sendComment", (req,res)=> {
         });
 })
 
-
+app.use(express.static("./public"));
 
 app.listen(8080, ()=> console.log("server is listening on 8080"));

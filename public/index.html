@@ -36,6 +36,11 @@
                 <img class="img" :src="image.url">
                 <h4>{{ image.title }}</h4>
                 <p>{{ image.description }}</p>
+                                <!-- <a href="'#'+ image.id">
+                                    <img class="img" :src="image.url">
+                                    <h4>{{ image.title }}</h4>
+                                    <p>{{ image.description }}</p>
+                                </a> -->
             </div>
             
         </div>
@@ -77,14 +82,14 @@
             <div class="comment-container">
                 <div class="comment-input">
 
-                        <input name="comment" type="text" placeholder="add comment" v-modal="commentNew">
-                        <input name="username" type="text" placeholder="your name" v-modal="usernameNew">
+                        <input name="commentNew" type="text" placeholder="add comment" v-model="commentNew">
+                        <input name="usernameNew" type="text" placeholder="your name" v-model="usernameNew">
                         <button class="button" @click="uploadComment">submit</button>
 
                 </div>
                 <div class="comment-display">
-                   <p>comment: </p>{{commentNew}}
-                   <p>username: </p>{{usernameNew}}
+                   <p>comment: </p>{{commentNew.comment}}
+                   <p>username: </p>{{usernameNew.username}}
                 </div>
             </div>
     </script>

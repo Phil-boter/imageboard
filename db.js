@@ -1,4 +1,4 @@
-// const { LexModelBuildingService } = require('aws-sdk');
+const { LexModelBuildingService } = require('aws-sdk');
 const spicedPg = require('spiced-pg');
 const db = spicedPg(process.env.DATABASE_URL || 'postgres:postgres:postgres@localhost:5432/imageboard');
 
@@ -50,14 +50,14 @@ module.exports.getComments = (imageId) => {
     return db
         .query(
             `
-            SELECT *
+            SELECT comment, username, created_at
             FROM comments
             WHERE image_id =$1
             ORDER BY id DESC
-            `
+            `,
             [imageId]
         );
-}
+};
 
 module.exports.saveComment = (comment, username, imageId) => {
     return db
@@ -65,8 +65,8 @@ module.exports.saveComment = (comment, username, imageId) => {
             `
             INSERT INTO comments (comment, username, image_id)
             VALUES($1, $2, $3)
-            RETURNING comment, username, craeted_at,
-            `
+            RETURNING comment, username, created_at
+            `,
             [comment, username, imageId]
         );
 };
