@@ -50,10 +50,10 @@ module.exports.getComments = (imageId) => {
     return db
         .query(
             `
-            SELECT comment, username, created_at
+            SELECT *
             FROM comments
             WHERE image_id =$1
-            ORDER BY DESC
+            ORDER BY id DESC
             `
             [imageId]
         );

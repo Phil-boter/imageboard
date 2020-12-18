@@ -118,7 +118,6 @@ app.get("/getMoreImages/:id", (req,res) => {
 app.get("/comments/:imageId", (req,res)=> {
     console.log("GET comments");
     console.log("req comments",req.params);
-    
     db.getComments(req.params.imageId)
         .then(({rows}) => {
             console.log("rows get", rows);
@@ -132,7 +131,15 @@ app.get("/comments/:imageId", (req,res)=> {
 app.post("/sendComment", (req,res)=> {
     console.log("POST sendComment");
     console.log("req sendcom",req.body);
+    const { imageId, comment, username } = req.body;
 
+    db.saveComment(imageId, comment, username)
+        .then(({ rows }) => {
+            res.json(rows[0]);
+        })
+        .catch((err) => {
+            console.error("error on db.sendComment: ", err);
+        });
 })
 
 

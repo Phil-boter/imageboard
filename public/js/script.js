@@ -1,15 +1,15 @@
 
 (function () {
 console.log("sanity");
-
+// const { axios } = require('aws-sdk');
 Vue.component("comment-component", {
     template: "#comment",
     props: ["imageId"],
     data: function () {
         return { 
             comments: [],
-            comment: "",
-            username: "",
+            commentNew: "",
+            usernameNew: "",
            
         };
     },
@@ -18,7 +18,7 @@ Vue.component("comment-component", {
         console.log("this", this);
         var self = this;
 
-        axios.get("/comments/" + this.imageId)
+        axios.get("/comments/" + this.imageId, {params: { imageId: this.imageId }})
             .then(function(res){
                 console.log("axios get comments");
                 console.log("res data get comments", res.data);
@@ -36,9 +36,9 @@ Vue.component("comment-component", {
                 e.preventDefault();
                 console.log("click");
                 var commentToSend = {
-                    comment: this.comment,
-                    username: this.username,
-                    imageId: this.id
+                    comment: this.commentNew,
+                    username: this.usernameNew,
+                    imageId: this.imageId
                 };
 
                 axios.post("/sendComment", commentToSend)
@@ -103,28 +103,33 @@ new Vue({
         title: "",
         description: "",
         username: "",
-        image: null,
+        image: null,// location.hash.slice(1)
         images: [],
-        imageId: null, // show up the modal set to null --> modal will disappear
+        imageId: null, //  show up the modal set to null --> modal will disappear
         showMore: true,
     },
     //mountes is a lifecycle method that we can access
     mounted: function(){
+        var self = this;
         // console.log("my vue componnet haas mounted");
         // console.log("this", this);
+        this.getImages();
 
-        var self = this; // value points to global this above
-        axios.get("/imageboard").then(function(response){
-            // console.log("self", self); // here we have reference to the global this
-            // console.log("response.data", response.data);
-            // console.log("this inside then", this);
-            self.images = response.data; // import images here from data to self
-            // console.log("self images", self.images); // now here it is a array of objects from the global this
-        }).catch(function (error){
-            console.log("error", error);
-        });
     },
         methods: {
+            getImages: function(){
+                var self = this; // value points to global this above
+                axios.get("/imageboard").then(function(response){
+                    // console.log("self", self); // here we have reference to the global this
+                    // console.log("response.data", response.data);
+                    // console.log("this inside then", this);
+                    self.images = response.data; // import images here from data to self
+                    // console.log("self images", self.images); // now here it is a array of objects from the global this
+                }).catch(function (error){
+                    console.log("error", error);
+                });
+            },
+
             handleFileChange: function (e) {
                 // Set the data's "image" property to the newly uploaded file
                 this.image = e.target.files[0];
@@ -182,6 +187,9 @@ new Vue({
                     .catch((err) => {
                         console.log("error getMoreImages", err);
                     })
+            },
+            showImages: function (){
+                this.getImages();
             }
         },
 });

@@ -66,7 +66,7 @@
                     <p>uploaded by {{image.username}} on {{image.created_at}} </p>
                 </div>
                 <div>
-                    <comment-component v-if="imageId" :image-id="imageId"></comment-component>
+                    <comment-component :image-id="imageId"></comment-component>
                 </div>
             </div>
         </div>
@@ -76,15 +76,15 @@
     <script id="comment" type="text/x-template">
             <div class="comment-container">
                 <div class="comment-input">
-                    <!-- <form method="POST"> -->
-                        <p>comment</p><input name="comment" type="text" placeholder="add comment" v-modal="comment">
-                        <p>username</p><input name="username" type="text" placeholder="your name" v-modal="username">
+
+                        <input name="comment" type="text" placeholder="add comment" v-modal="commentNew">
+                        <input name="username" type="text" placeholder="your name" v-modal="usernameNew">
                         <button class="button" @click="uploadComment">submit</button>
-                     <!-- </form> -->
+
                 </div>
                 <div class="comment-display">
-                   {{comment.username}}
-                   {{comment}}
+                   <p>comment: </p>{{commentNew}}
+                   <p>username: </p>{{usernameNew}}
                 </div>
             </div>
     </script>
