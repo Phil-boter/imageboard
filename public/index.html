@@ -32,15 +32,15 @@
         <!-- render images -->
         <div class="imagecontainer">
             <h1>latest uploads</h1>
-            <div v-for="image in images" class="image-box" @click="showComponent(image.id)">
-                <img class="img" :src="image.url">
+            <div   v-for="image in images" class="image-box">  <!-- @click="showComponent(image.id)" -->
+                <!-- <img class="img" :src="image.url">
                 <h4>{{ image.title }}</h4>
-                <p>{{ image.description }}</p>
-                                <!-- <a href="'#'+ image.id">
+                <p>{{ image.description }}</p> -->
+                                <a :href="'#' + image.id">
                                     <img class="img" :src="image.url">
-                                    <h4>{{ image.title }}</h4>
-                                    <p>{{ image.description }}</p>
-                                </a> -->
+                                </a>
+                                <h4>{{ image.title }}</h4>
+                                <p>{{ image.description }}</p>
             </div>
             
         </div>

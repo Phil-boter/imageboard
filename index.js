@@ -46,6 +46,9 @@ app.get("/imageboard", (req,res) => {
         })
         .catch((err)=> {
             console.log("error",err);
+            res.json({
+                success: false
+            });            
         })
 
 });
@@ -79,6 +82,9 @@ app.post("/upload",upload.single("image"),s3.upload,  (req, res) => {
         )
         .catch((err) => {
             console.log("Error in uploadImage", err);
+            res.json({
+                success: false
+            });
         })
     } else {
         res.json({
@@ -101,6 +107,9 @@ app.get("/singleImage/:id", (req, res) => {
         })
         .catch((err) => {
             console.log("error in GET/getSingsImage ", err);
+            res.json({
+                success: false
+            });            
         });
 });
 app.get("/getMoreImages/:id", (req,res) => {
@@ -113,6 +122,9 @@ app.get("/getMoreImages/:id", (req,res) => {
         })
         .catch((err)=> {
             console.log("error in getMoreImages", err);
+            res.json({
+                success: false
+            });            
         })
 });
 
@@ -126,6 +138,9 @@ app.get("/comments/:imageId", (req,res)=> {
     })
     .catch((err)=> {
             console.log("error in getComments", err);
+            res.json({
+                success: false
+            });            
         });
 });
 
@@ -142,6 +157,9 @@ app.post("/sendComment", (req,res)=> {
         })
         .catch((err) => {
             console.error("error on db.sendComment: ", err);
+            res.json({
+                success: false
+            });            
         });
 })
 
