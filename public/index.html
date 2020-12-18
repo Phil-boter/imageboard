@@ -68,7 +68,8 @@
                     <img :src="image.url" alt="">
                     <p>{{image.title}}</p>
                     <p>{{image.description}}</p>
-                    <p>uploaded by {{image.username}} on {{image.created_at}} </p>
+                    <p>uploaded {{image.username}} <span>on {{image.created_at}} </span></p>
+                    <p></p>
                 </div>
                 <div>
                     <comment-component :image-id="imageId"></comment-component>
@@ -87,10 +88,12 @@
                         <button class="button" @click="uploadComment">submit</button>
 
                 </div>
-                <div class="comment-display">
-                   <p>comment: </p>{{commentNew.comment}}
-                   <p>username: </p>{{usernameNew.username}}
+
+                <div v-for="comment in comments" class="comment-display">
+                    <p> <span class="comment-username">{{comment.username}}</span> - <span class="comment-date">{{comment.created_at}}</span> </p>
+                    <p>{{comment.comment}}</p>
                 </div>
+
             </div>
     </script>
 

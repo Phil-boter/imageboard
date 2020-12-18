@@ -10,6 +10,7 @@ Vue.component("comment-component", {
             comments: [],
             commentNew: "",
             usernameNew: "",
+            created_at: "",
            
         };
     },
@@ -35,9 +36,9 @@ Vue.component("comment-component", {
         axios.get("/comments/" + this.imageId)
             .then(function(res){
                 console.log("axios get comments");
-                console.log("res data get comments", res.data);
+                // console.log("res data get comments", res.data);
                 self.comments = res.data;
-                console.log("self", self.comments);
+                // console.log("self", self.comments);
             })
             .catch((err)=> {
                 console.log("error get axois comments",err);

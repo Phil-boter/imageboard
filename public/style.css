@@ -149,7 +149,7 @@ h1 {
 .modal-content {
     display: flex;
     width: 60%;
-    height: 80%;
+    height: 90%;
     min-width: 320px;
     min-height: 500px;
     background-color: white;
@@ -162,10 +162,14 @@ h1 {
 }
 
 .modal-content img {
+    position: absolute;
+    top: 2.5rem;
+    left: 1rem;
+    right: 1rem;
     object-fit: cover;
-    height: 400px;
-    width: 300px;
-    margin-top: 1rem;
+    height: 300px;
+    width: 90%;
+    margin: 0 auto;
 }
 .modal-description {
     display: flex;
@@ -182,10 +186,25 @@ h1 {
 
 /* comment container */
 .comment-container {
-    height: 20px;
+    position: absolute;
+    top: 400px;
+    left: 1rem;
+    right: 1rem;
+    width: 90%;
+    margin: 1rem auto;
+
     background-color: dimgray;
 }
 
+.comment-input {
+    /* border: 3px solid blue; */
+    width: 100%;
+}
+.comment-display {
+    display: flex;
+    flex: wrap;
+    margin: 0.5rem;
+}
 @media only screen and (max-width: 455px) {
     .header p {
         font-size: 2.3rem;
