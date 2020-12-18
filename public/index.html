@@ -63,17 +63,18 @@
         <div class="modal-container">
             <div class="modal-content">
                 <h2 @click="closeModal" class="close-button">X</h2>
-                
-                <div class="modal-description">
+                <div class="modal-image">
                     <img :src="image.url" alt="">
-                    <p>{{image.title}}</p>
-                    <p>{{image.description}}</p>
-                    <p>uploaded {{image.username}} <span>on {{image.created_at}} </span></p>
-                    <p></p>
                 </div>
-                <div>
-                    <comment-component :image-id="imageId"></comment-component>
+                <div class="modal-description">
+                        <div class="modal-description-content">
+                        <p>{{image.title}}</p>
+                        <p>{{image.description}}</p>
+                        <p>uploaded {{image.username}} <span>on {{image.created_at}} </span></p>
+                        <comment-component :image-id="imageId"></comment-component>
+                    </div>
                 </div>
+
             </div>
         </div>
     </script>
@@ -85,12 +86,12 @@
 
                         <input name="commentNew" type="text" placeholder="add comment" v-model="commentNew">
                         <input name="usernameNew" type="text" placeholder="your name" v-model="usernameNew">
-                        <button class="button" @click="uploadComment">submit</button>
+                        <button class="button button-comment" @click="uploadComment">submit</button>
 
                 </div>
 
                 <div v-for="comment in comments" class="comment-display">
-                    <p> <span class="comment-username">{{comment.username}}</span> - <span class="comment-date">{{comment.created_at}}</span> </p>
+                    <p> <span class="comment-username">{{comment.username}}</span> - <span class="comment-date">{{comment.created_at.substr(0, 10) + ", " + comment.created_at.substr(11, 5)}}</span> </p>
                     <p>{{comment.comment}}</p>
                 </div>
 

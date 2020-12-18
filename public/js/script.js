@@ -63,8 +63,8 @@ Vue.component("comment-component", {
                 .then(function(res) {               
                         console.log("response", res.data);
                         console.log("self", self);
-                        console.log("comments", comments);
-                        self.comments.unshift(res.data.comments);
+                        // console.log("comments", comments);
+                        self.comments.unshift(res.data);
                 })
                 .catch(err => {console.log("error axois sendComment", err);
                 });
@@ -91,23 +91,25 @@ Vue.component("modal-component", {
     },
     watch:{ 
         imageId: function () {
-        var self = this;
+            var self = this;
 
-        axios.get(`/singleImage/` + this.imageId)
-             .then(function(res){
-                console.log("axios getSingeleImage");
-                console.log("res.data",res.data)
-                self.image.id = res.data[0].id;
-                self.image.url = res.data[0].url;
-                self.image.title = res.data[0].title;
-                self.image.description = res.data[0].description;
-                self.image.username = res.data[0].username; 
-                self.image.created_at = res.data[0].created_at;              
-            })
-            .catch((err) => {
-                console.log("error in get singleImage", err);
-                this.$emit("close");
-            }) 
+            axios.get(`/singleImage/` + this.imageId)
+                .then(function(res){
+                    console.log("axios getSingeleImage");
+                    console.log("res.data",res.data)
+                    self.image.id = res.data[0].id;
+                    self.image.url = res.data[0].url;
+                    self.image.title = res.data[0].title;
+                    self.image.description = res.data[0].description;
+                    self.image.username = res.data[0].username; 
+                    self.image.created_at = res.data[0].created_at.substr(0, 10) +
+                                            ", " +
+                                            res.data[0].created_at.substr(11, 5);            
+                })
+                .catch((err) => {
+                    console.log("error in get singleImage", err);
+                    this.$emit("close");
+                }) 
         }
 
     },
@@ -123,7 +125,9 @@ Vue.component("modal-component", {
                 self.image.title = res.data[0].title;
                 self.image.description = res.data[0].description;
                 self.image.username = res.data[0].username; 
-                self.image.created_at = res.data[0].created_at;              
+                self.image.created_at = res.data[0].created_at.substr(0, 10) +
+                                        ", " +
+                                        res.data[0].created_at.substr(11, 5);            
             })
             .catch((err) => {
                 console.log("error in get singleImage", err);
@@ -132,6 +136,7 @@ Vue.component("modal-component", {
     },
     methods: {
         closeModal: function() {
+            this.imageId = null;
             this.$emit("close");
         }
     }
@@ -217,6 +222,7 @@ new Vue({
             closeComponent: function() {
                 console.log('closeMe in the instance / parent is running! This was emitted from the component');
                 this.imageId = null;
+                console.log("close id", this.imageId);
             },
             getMoreImages: function() {
                 const lastId = this.images[this.images.length -1].id;
@@ -234,10 +240,10 @@ new Vue({
                     .catch((err) => {
                         console.log("error getMoreImages", err);
                     })
-            },
-            showImages: function (){
-                this.getImages();
             }
+            // showImages: function (){
+            //     this.getImages();
+            // }
         },
 });
 

@@ -148,32 +148,69 @@ h1 {
 
 .modal-content {
     display: flex;
-    width: 60%;
+    width: 85vw;
     height: 90%;
-    min-width: 320px;
-    min-height: 500px;
+
     background-color: white;
-    transition: 1s ease-in-out;
-    transform: translateX(0);
-    padding: 0.5rem;
-    transition: 0.2s;
-    justify-content: center;
+
     align-items: center;
+    overflow-y: auto;
 }
 
-.modal-content img {
-    position: absolute;
-    top: 2.5rem;
-    left: 1rem;
-    right: 1rem;
-    object-fit: cover;
-    height: 300px;
-    width: 90%;
-    margin: 0 auto;
+@media only screen and (max-width: 1000px) {
+    .modal-content {
+        flex-direction: column;
+    }
+}
+
+/* @media only screen and (min-width: 1000px) {
+    .modal-content {
+        flex-direction: row;
+    }
+} */
+
+.modal-imgage {
+    height: 60%;
+    width: 60%;
+    display: flex;
+}
+
+@media only screen and (max-width: 1090px) {
+    .modal-image {
+        width: 90%;
+        max-height: 60%;
+    }
+}
+
+.modal-image img {
+    top: 0;
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
 }
 .modal-description {
     display: flex;
     flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    color: black;
+    width: 30%;
+    height: 85vh;
+    margin-left: 2%;
+    /* margin-right: -20px; */
+    font-size: 1rem;
+}
+
+@media only screen and (max-width: 1000px) {
+    .modal-description {
+        width: 90%;
+    }
+}
+
+.modal-description-content {
+    flex-grow: 3;
+    height: 50%;
+    overflow: hidden;
 }
 
 .close-button {
@@ -186,27 +223,66 @@ h1 {
 
 /* comment container */
 .comment-container {
-    position: absolute;
-    top: 400px;
-    left: 1rem;
-    right: 1rem;
-    width: 90%;
-    margin: 1rem auto;
-
-    background-color: dimgray;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    margin-bottom: 1rem;
 }
 
 .comment-input {
-    /* border: 3px solid blue; */
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.comment-input input {
+    width: 52%;
+    height: 2.6rem;
 }
 .comment-display {
-    display: flex;
-    flex: wrap;
-    margin: 0.5rem;
+    margin-top: 10px;
+    max-height: 40vh;
+    overflow-y: auto;
 }
-@media only screen and (max-width: 455px) {
+
+.button-comment {
+    width: 52%;
+    height: 2.6rem;
+    margin-left: 0.2rem;
+}
+
+@media only screen and (max-width: 650px) {
     .header p {
         font-size: 2.3rem;
+    }
+    .modal-content {
+        width: 90%;
+    }
+}
+@media only screen and (max-width: 1000) {
+    .header p {
+        font-size: 2.3rem;
+    }
+    .modal-content {
+        width: 90%;
+    }
+    .comment-input input {
+        width: 70vw;
+        height: 2.6rem;
+    }
+    .button-comment {
+        width: 70vw;
+        height: 2.6rem;
+    }
+    .comment-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .comment-input {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 }
