@@ -136,7 +136,7 @@ Vue.component("modal-component", {
     },
     methods: {
         closeModal: function() {
-            this.imageId = null;
+
             this.$emit("close");
         }
     }
@@ -240,10 +240,10 @@ new Vue({
                     .catch((err) => {
                         console.log("error getMoreImages", err);
                     })
+            },
+            showImages: function (){
+                this.getImages();
             }
-            // showImages: function (){
-            //     this.getImages();
-            // }
         },
 });
 
