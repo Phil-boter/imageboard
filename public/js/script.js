@@ -222,6 +222,7 @@ new Vue({
             closeComponent: function() {
                 console.log('closeMe in the instance / parent is running! This was emitted from the component');
                 this.imageId = null;
+                history.pushState({}, " ", "/");
                 console.log("close id", this.imageId);
             },
             getMoreImages: function() {
