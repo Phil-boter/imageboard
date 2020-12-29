@@ -138,7 +138,7 @@ h1 {
     right: 0;
     width: 100vw;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     position: fixed;
     flex-direction: column;
     justify-content: center;
@@ -150,9 +150,7 @@ h1 {
     display: flex;
     width: 85vw;
     height: 90%;
-
     background-color: white;
-
     align-items: center;
     overflow-y: auto;
 }
@@ -197,7 +195,6 @@ h1 {
     width: 30%;
     height: 85vh;
     margin-left: 2%;
-    /* margin-right: -20px; */
     font-size: 1rem;
 }
 
@@ -219,6 +216,7 @@ h1 {
     right: 1rem;
     margin: -0.3rem;
     cursor: default;
+    color: white;
 }
 
 /* comment container */
@@ -240,7 +238,8 @@ h1 {
     height: 2.6rem;
 }
 .comment-display {
-    margin-top: 10px;
+    margin-top: 0.4rem;
+    margin-right: 0.4rem;
     max-height: 40vh;
     overflow-y: auto;
 }
@@ -256,33 +255,31 @@ h1 {
         font-size: 2.3rem;
     }
     .modal-content {
-        width: 90%;
+        width: 90vw;
+    }
+    .next-image {
+        width: 90vw;
     }
 }
-@media only screen and (max-width: 1000) {
-    .header p {
-        font-size: 2.3rem;
-    }
-    .modal-content {
-        width: 90%;
-    }
-    .comment-input input {
-        width: 70vw;
-        height: 2.6rem;
-    }
-    .button-comment {
-        width: 70vw;
-        height: 2.6rem;
-    }
-    .comment-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
 
-    .comment-input {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+.next-img {
+    cursor: pointer;
+    display: inline-flex;
+    margin: 0 auto;
+    justify-content: center;
+    text-align: center;
+    width: 42.5vw;
+    /* height: 2.2rem; */
+    background-color: #0c2427;
+    color: white;
+    font-size: 2rem;
+    padding: 0.2rem;
+}
+
+@media only screen and (max-width: 650px) {
+    .next-img {
+        width: 45vw;
+        font-size: 1.5rem;
+        margin-top: 2.5rem;
     }
 }

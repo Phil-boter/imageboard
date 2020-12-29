@@ -14,38 +14,37 @@ Vue.component("comment-component", {
            
         };
     },
-    watch: {
-        imageId: function() {
-            var self = this;
 
-                axios.get("/comments/" + this.imageId)
-                    .then(function(res){
-                        console.log("axios get comments");
-                        console.log("res data get comments", res.data);
-                        self.comments = res.data;
-
-                    })
-                    .catch((err)=> {
-                        console.log("error get axois comments",err);
-                    })
-        }    
-    },
     mounted: function () {
-        console.log("my vue componnet haas mounted");
+        console.log("my vue componet has mounted");
         console.log("this", this);
         var self = this;
-
         axios.get("/comments/" + this.imageId)
             .then(function(res){
-                console.log("axios get comments");
+                console.log("axios get mounted comments");
                 // console.log("res data get comments", res.data);
                 self.comments = res.data;
-                // console.log("self", self.comments);
             })
             .catch((err)=> {
                 console.log("error get axois comments",err);
             })
 
+    },
+    watch:{
+        imageId: function () {
+        var self = this;
+            console.log("imgId 20", self.imageId)
+            axios.get("/comments/" + self.imageId)
+                .then(function(res){
+                    console.log("axios get watch comments");
+                    console.log("res data get comments", res.data);
+                    self.comments = res.data;
+                    console.log("self comments", self.comments);
+                })
+                .catch((err)=> {
+                    console.log("error get axois comments",err);
+                });
+            },
     },
     methods: {
     
@@ -85,34 +84,11 @@ Vue.component("modal-component", {
                     username: '',
                     title: '',
                     description: '',
-                    created_at: '',
+                    created_at: ''
             },
         };
     },
-    watch:{ 
-        imageId: function () {
-            var self = this;
 
-            axios.get(`/singleImage/` + this.imageId)
-                .then(function(res){
-                    console.log("axios getSingeleImage");
-                    console.log("res.data",res.data)
-                    self.image.id = res.data[0].id;
-                    self.image.url = res.data[0].url;
-                    self.image.title = res.data[0].title;
-                    self.image.description = res.data[0].description;
-                    self.image.username = res.data[0].username; 
-                    self.image.created_at = res.data[0].created_at.substr(0, 10) +
-                                            ", " +
-                                            res.data[0].created_at.substr(11, 5);            
-                })
-                .catch((err) => {
-                    console.log("error in get singleImage", err);
-                    this.$emit("close");
-                }) 
-        }
-
-    },
     mounted: function() {
         var self = this;
 
@@ -127,18 +103,59 @@ Vue.component("modal-component", {
                 self.image.username = res.data[0].username; 
                 self.image.created_at = res.data[0].created_at.substr(0, 10) +
                                         ", " +
-                                        res.data[0].created_at.substr(11, 5);            
+                                        res.data[0].created_at.substr(11, 5);           
             })
             .catch((err) => {
                 console.log("error in get singleImage", err);
                 this.$emit("close");
             })
     },
+    watch:{ 
+        imageId: function () {
+            var self = this;
+
+            axios.get(`/singleImage/` + this.imageId)
+                .then(function(res){
+                    console.log("axios watch getSingeleImage");
+                    console.log("res.data",res.data)
+                    self.image.id = res.data[0].id;
+                    self.image.url = res.data[0].url;
+                    self.image.title = res.data[0].title;
+                    self.image.description = res.data[0].description;
+                    self.image.username = res.data[0].username; 
+                    self.image.created_at = res.data[0].created_at.substr(0, 10) +
+                                            ", " +
+                                            res.data[0].created_at.substr(11, 5);;            
+                })
+                .catch((err) => {
+                    console.log("error in get singleImage", err);
+                    this.$emit("close");
+                });
+            },
+    },
+
     methods: {
         closeModal: function() {
 
             this.$emit("close");
-        }
+        },
+
+        nextImage: function() {
+            console.log("next img");
+            if(this.imageId > 1) {
+                let prevId = this.imageId;
+                prevId --;
+                location.hash = "#" + prevId;
+            }
+        },
+        prevImage: function() {
+            console.log("prev img");
+            if(this.imageId){ 
+                let nextId = this.imageId;
+                nextId ++;
+                location.hash = "#" + nextId;
+            }
+        },
     }
 });
 
@@ -150,26 +167,17 @@ new Vue({
         title: "",
         description: "",
         username: "",
-        image: location.hash.slice(1), // null
+        image: null, // location.hash.slice(1), // null
         images: [],
-        imageId: null, //  show up the modal set to null --> modal will disappear
+        imageId: location.hash.slice(1),//  show up the modal set to null --> modal will disappear
         showMore: true,
+        comments: [],
     },
     //mountes is a lifecycle method that we can access
     mounted: function(){
         var self = this;
         // console.log("my vue componnet has mounted");
         // console.log("this", this);
-        this.getImages();
-        addEventListener("hashchange", function(){
-            console.log("location hash has updated to value",
-            location.hash);
-            self.imageId = location.hash.slice(1);
-        })
-
-    },
-        methods: {
-            getImages: function(){
                 var self = this; // value points to global this above
                 axios.get("/imageboard").then(function(response){
                     // console.log("self", self); // here we have reference to the global this
@@ -180,7 +188,14 @@ new Vue({
                 }).catch(function (error){
                     console.log("error", error);
                 });
-            },
+        addEventListener("hashchange", function(){
+            // console.log("location hash has updated to value",
+            // location.hash);
+            self.imageId = location.hash.slice(1);
+        })
+
+    },
+        methods: {
 
             handleFileChange: function (e) {
                 // Set the data's "image" property to the newly uploaded file
@@ -202,7 +217,7 @@ new Vue({
                 axios.post("/upload", formData)
                 .then(res => {
                     if(res.data.success){
-                        // console.log("response", res.data);
+                        console.log("response", res.data);
                         this.images.unshift(res.data.uploadedImage);
                     }
 
@@ -241,10 +256,8 @@ new Vue({
                     .catch((err) => {
                         console.log("error getMoreImages", err);
                     })
-            },
-            showImages: function (){
-                this.getImages();
             }
+
         },
 });
 

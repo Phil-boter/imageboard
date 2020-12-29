@@ -61,11 +61,16 @@
     <!-- Image modal -->
     <script id="modal" type="text/x-template">
         <div class="modal-container">
+            <span><a class="next-img" @click="prevImage">&#8249;</a><a class="next-img" @click="nextImage">&#8250;</a></span> 
             <div class="modal-content">
                 <h2 @click="closeModal" class="close-button">X</h2>
+ 
                 <div class="modal-image">
-                    <img :src="image.url" alt="">
+                    <img :src="image.url" :alt="image.description">
+              
+                    
                 </div>
+
                 <div class="modal-description">
                         <div class="modal-description-content">
                         <p>{{image.title}}</p>
@@ -74,8 +79,13 @@
                         <comment-component :image-id="imageId"></comment-component>
                     </div>
                 </div>
-
+           
+                <!-- <div>
+                    <i class="next-img prev" @click="prevImage"><</i>
+                    <i class="next-img next" @click="nextImage">></i>
+                    </div> -->
             </div>
+
         </div>
     </script>
     
