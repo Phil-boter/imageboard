@@ -4,7 +4,7 @@ BEATUFUL BICYCLES is a small online imgage-board
 
 ## About
 
-    I built this project during my attendance to the Coding Bootcamp at Spiced Academy's in Berlin.
+    I builded this project during my attendance to the Coding Bootcamp at Spiced Academy's in Berlin.
 
     Users can can upload images to the image-board. The images are stored with AWS s3. 
     Once uploaded it is possible to open up a single picture and make comments to this picture
