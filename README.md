@@ -30,4 +30,4 @@ BEATUFUL BICYCLES is a small online imgage-board
       # Start server
       npm start
     
-## Screenshots
+
