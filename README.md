@@ -1,5 +1,5 @@
 ![imageboard1](https://user-images.githubusercontent.com/68227335/123141817-14bc6180-d459-11eb-82de-2383f8325de9.png)
-# imageboard
+# Imageboard
 
 BEATUFUL BICYCLES is a small online imgage-board
 
